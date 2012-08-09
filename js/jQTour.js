@@ -6,73 +6,80 @@
              {"key":2, "value": {"title":"end",    "desc":"This is the end","css":"end" }}
         ];
 
-var jQTour = {
+ var jQTour = {
 
-    init: function(msg){
-        this.msg = msg;
-    },
+     init: function(msg){
+         this.msg = msg;
+     },
+     dict: function(o)
+     {
+    	 if (o === 0)
+    		 return "start";
+     	 if (o === 1)
+     		 return "mid";
+     	 if (o === 2)
+     		 return "end";
+     	 if (o === "mid")
+     		 return 1;
+     	 if (o === "start")
+     		 return 0;
+     	 if (o === "end")
+     		 return 2;
+     },
+     show: function(o, e)
+     {
+    	 var tmp = jQTour.dict(o);
+         window.location = "#h-"+o;
+         var resp = jQTour.disp(tmp);
+         jQTour.tmpl(resp);
+         e.preventDefault();
+     },
+     tmpl: function(resp)
+     {
+         $(".jQTour").each(function(){ $(this).remove(); });
+         var prev = "";
+         if(resp["push"] != null) { prev = "<a id='prev' href='#h-"+resp["push"]+"' data-id='"+resp["push"]+"'> < </a>"; }
 
-    tmpl: function(resp)
-    {
-        $(".jQTour").each(function(){
-            $(this).remove();
-        });
+         var next = "";
+         if(resp["next"] != null) { next = "<a id='next' href='#h-"+resp["next"]+"' data-id='"+resp["next"]+"'> > </a>"; }
 
-        var prev = "";
-        if(resp["push"] != null)
-            var prev = "<a id='prev' href='#h"+resp["push"]+"' data-id="+resp["push"]+"> < </a>";
-    
-        var next = "";
-        if(resp["next"] != null)
-            var next = "<a id='next' href='#h"+resp["next"]+"' data-id="+resp["next"]+"> > </a>";
-    
-        
-        $("#bd").append("<div class='"+resp["content"].css+" jQTour'>"+
-                        "<p id='title'>"+resp["content"].title+"</p>"+
-                        "<p id='msg'>"+resp["content"].desc+"</p>"+
-                        prev+next+
-                        "</div>");
-        $("#next").on("click",function(e){
-            window.location = "#h"+$(this).attr('data-id');
-            var resp = jQTour.disp($(this).attr("data-id"));
-            jQTour.tmpl(resp);
-            e.preventDefault();
-        });
-    
-        $("#prev").bind("click",function(){
-            var resp = jQTour.disp($(this).attr("data-id"));
-            jQTour.tmpl(resp);
-        });
-    },
+         $("#h-"+resp["content"].css).append("<div class='"+resp["content"].css+" jQTour'>"+
+                         "<p id='title'>"+resp["content"].title+"</p>"+
+                         "<p id='msg'>"+resp["content"].desc+"</p>"+
+                         prev+next+
+                         "</div>");
+         $("#next").on("click",function(e){ jQTour.show($(this).attr("data-id"), e); });
+         $("#prev").bind("click",function(e){ jQTour.show($(this).attr("data-id"), e); });
+     },
+     disp: function(o) //Display
+     {
+         var resp = [];
+         if(o == undefined) { o = 0; }
 
-    disp: function(o) //Display
-    {
-        var resp = [];
-        if(o == undefined)
-            o = 0;
+         if (o == this.msg.length-1) n = null;
+         else n = parseInt(o)+1;
 
-        if (o == this.msg.length-1) n = null;
-        else n = parseInt(o)+1;
+         if(o == 0) p = null;
+         else p = parseInt(o)-1;
 
-        if(o == 0) p = null;
-        else p = parseInt(o)-1;
+         var n = jQTour.dict(n);
+         var p = jQTour.dict(p);
 
-        resp["next"] = n;
-        resp["push"] = p;
-        for (var i in this.msg)
-        {
-            if(this.msg[i].key == o)
-                resp["content"] = this.msg[i].value;
-        }
-        return resp;
-    }
-};
+         resp["next"] = n;
+         resp["push"] = p;
+         for (var i in jQTour.msg)
+         {
+             if(jQTour.msg[i].key == o)
+                 resp["content"] = jQTour.msg[i].value;
+         }
+         return resp;
+     }
+ };
 
-(function(d) {
-    jQTour.init(d);
+$(document).load(function(data){
+    jQTour.init(data);
     var resp = jQTour.disp();
-    jQTour.tmpl(resp);
-
+    setTimeout(function(){
+    	jQTour.tmpl(resp);
+    }, 1000);
 }(data));
-
-​

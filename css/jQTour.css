@@ -1,0 +1,76 @@
+body{
+    padding: 20px;
+}
+
+a, a:visited, a:hover
+{
+    text-decoration: none;
+}
+
+li{
+    height: 500px;
+    margin-bottom: 20px;
+}
+
+#prev
+{
+    float: left;
+}
+
+#next
+{
+    float: right;
+}
+
+#title
+{
+    font: 15px;
+    width: auto;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.jQTour{
+    width: auto;
+    position: absolute;
+    text-align: center;
+    left: 20px;
+    padding: 5px;
+}
+
+.start
+{
+    top: 45px;
+    border: 1px solid red;
+}
+
+.start, .start > a
+{
+    color: pink;
+}
+
+.mid{
+    top: 570px;
+    border: 1px solid blue;
+}
+
+.mid, .mid > a
+{
+    color: blue;
+}
+
+.end
+{
+    top: 1090px;
+    border: 1px solid green;
+}
+
+.end, .end > a
+{
+    color: green;
+}
+#msg{
+    color: black;
+    padding: 5px 10px 0px;
+}
+​

@@ -29,7 +29,7 @@
      show: function(o, e)
      {
     	 var tmp = jQTour.dict(o);
-         window.location = "#h-"+o;
+         $('html,body').animate({scrollTop:$("#h-"+o).offset().top}, 500);
          var resp = jQTour.disp(tmp);
          jQTour.tmpl(resp);
          e.preventDefault();

@@ -12,6 +12,7 @@ TODO:
 1. Make a jQuery Plugin.
 2. Not fully tested.
 
+[Demo](http://abhimehta.github.com/jQTour/)
 [jsFiddle Implementation](http://jsfiddle.net/abhimehta/Brbps/)
 
 
